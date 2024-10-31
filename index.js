@@ -39,13 +39,15 @@ app.get("/api/:date?", function (req, res) {
     );
   }
 
-  if (date === "Invalid Date") {
-    res.json({ error: "Invalid Date" });
+  const unix = date.getTime();
+
+  if (isNaN(unix)) {
+    res.json({ error : "Invalid Date" })
     return;
   }
 
   res.json({
-    unix: date.getTime(),
+    unix,
     utc: date.toUTCString()
   });
 });
